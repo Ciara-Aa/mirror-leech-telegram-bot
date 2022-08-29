@@ -143,6 +143,8 @@ Check all arguments from this <a href='https://github.com/yt-dlp/yt-dlp/blob/mas
                     elif frmt.get('video_ext') == 'none' and frmt.get('acodec') != 'none':
                         b_name = f"{frmt['acodec']}-{frmt['ext']}"
                         v_format = f"ba[format_id={format_id}]"
+                    else:
+                        continue
 
                     if b_name in formats_dict:
                         formats_dict[b_name][frmt['tbr']] = [size, v_format]
@@ -163,7 +165,7 @@ Check all arguments from this <a href='https://github.com/yt-dlp/yt-dlp/blob/mas
         buttons.sbutton("Best Audio", f"qu {msg_id} {best_audio}")
         buttons.sbutton("Cancel", f"qu {msg_id} cancel")
         YTBUTTONS = buttons.build_menu(2)
-        listener_dict[msg_id] = [listener, user_id, link, name, YTBUTTONS, args, formats_dict]
+        listener_dict[msg_id] = [listener, user_id, link, name, YTBUTTONS, opt, formats_dict]
         bmsg = sendMarkup('Choose Video Quality:', bot, message, YTBUTTONS)
 
     Thread(target=_auto_cancel, args=(bmsg, msg_id)).start()
